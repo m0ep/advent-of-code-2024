@@ -5,6 +5,8 @@ val VEC_DOWN = Vec2(0, 1)
 val VEC_LEFT = Vec2(-1, 0)
 val VEC_RIGHT = Vec2(1, 0)
 
+class LoopDetectedException : Exception()
+
 data class PuzzleInput06(
     val map: PuzzleMap06,
     val obstacles: List<Vec2>,
@@ -51,19 +53,6 @@ fun isPosInMap(
     }
 
     return true
-}
-
-fun charToDir(
-    value: Char
-) : Vec2 {
-    when (value) {
-        '<' -> return VEC_LEFT
-        '>' -> return VEC_RIGHT
-        '^' -> return VEC_UP
-        'v' -> return VEC_DOWN
-    }
-
-    return Vec2(0, 0)
 }
 
 fun dirToChar(
@@ -114,48 +103,82 @@ fun parseMap(
     return PuzzleInput06(map, obstaclePositions, guardStartPos!!, guardStartDir!!)
 }
 
+fun simulate(
+    initGuard: Guard,
+    map: PuzzleMap06
+): List<Guard> {
+    var guard = initGuard
+    val guardStates = mutableSetOf(guard)
+
+    do {
+        var nextGuard = guard.move()
+        if (!isPosInMap(nextGuard.pos, map)) {
+            return guardStates.toList()
+        }
+
+        val nextTile = map[nextGuard.pos.y][nextGuard.pos.x]
+        if ('#' == nextTile) {
+            nextGuard = guard.turnClockwise()
+        } else if (guardStates.contains(nextGuard)) {
+            throw LoopDetectedException()
+        } else { // can move
+            guardStates.add(nextGuard)
+        }
+
+        guard = nextGuard
+    } while (true)
+}
+
+
 fun main() {
     fun part1(input: List<String>): Int {
-        var puzzleMap = parseMap(input)
+        val puzzleMap = parseMap(input)
+        val map = puzzleMap.map
+        val guard = puzzleMap.toGuard()
 
-        val map = puzzleMap.toMutableMap()
-        var guard = puzzleMap.toGuard()
-        val moves = mutableListOf(guard)
-        val visitedPositions = mutableSetOf(guard.pos)
-
-        do {
-            var nextGuard = guard.move()
-            if(!isPosInMap(nextGuard.pos, map)) {
-                map[guard.pos.y][guard.pos.x] = 'X'
-                break
-            }
-
-            val nextTile = map[nextGuard.pos.y][nextGuard.pos.x]
-            if('#' == nextTile){
-                nextGuard = guard.turnClockwise()
-                map[nextGuard.pos.y][nextGuard.pos.x] = dirToChar(nextGuard.direction)
-            } else { // can move
-                map[guard.pos.y][guard.pos.x] = 'X'
-                map[nextGuard.pos.y][nextGuard.pos.x] = dirToChar(nextGuard.direction)
-                visitedPositions.add(nextGuard.pos)
-            }
-
-            guard = nextGuard
-
-        } while (isPosInMap(guard.pos, map))
-
-        return visitedPositions.size
+        val simulationResult = simulate(guard, map)
+        val uniquePositions = simulationResult.map { it.pos }.toSet()
+        return uniquePositions.size
     }
 
     fun part2(input: List<String>): Int {
-        return input.size
+        val puzzleMap = parseMap(input)
+        val map = puzzleMap.toMutableMap()
+        val guard = puzzleMap.toGuard()
+
+        val visitedPositions = simulate(guard, map)
+            .drop(1) // remove initial position
+            .map { it.pos }
+            .distinct()
+
+        var loops = 0
+        for (position in visitedPositions) {
+            val orgTile = map[position.y][position.x]
+            map[position.y][position.x] = '#'
+
+            try{
+                simulate(guard, map)
+            } catch (e: LoopDetectedException) {
+                loops++
+            }
+
+            map[position.y][position.x] = orgTile
+        }
+
+        return loops
     }
 
-    val testInput1 = readInputLines("Day06_test")
-    check(part1(testInput1) == 41)
+    val testInput = readInputLines("Day06_test")
+    check(part1(testInput) == 41)
 
     val input = readInputLines("Day06")
-    part1(input).println()
+    val resultPart1 = part1(input)
+    resultPart1.println()
+    check(4665 == resultPart1)
 
-    part2(input).println()
+    check(part2(testInput) == 6)
+
+    val resultPart2 = part2(input)
+    resultPart2.println()
+    check(1688 == resultPart2)
 }
