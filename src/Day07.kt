@@ -95,10 +95,10 @@ fun main() {
     part1(listOf("3267: 81 40 27")).checkResult(3267UL)
     part1(listOf("190: 10 19")).checkResult(190UL)
 
-    val inputTest = readInputLines("Day07_test")
+    val inputTest = readInputLines("day07/Day07_test")
     part1(inputTest).checkResult(3749UL)
 
-    val input = readInputLines("Day07")
+    val input = readInputLines("day07/Day07")
     part1(input).println("Part1")
 
     part2(inputTest).checkResult(11387UL)

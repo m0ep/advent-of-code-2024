@@ -80,14 +80,14 @@ fun main() {
             .sumOf { it[Math.round(it.size / 2.0).toInt() - 1] }
     }
 
-    val part1TestResult = part1(readInputLines("Day05_test"))
+    val part1TestResult = part1(readInputLines("day05/Day05_test"))
     "Part1 test result = $part1TestResult".println()
     check(part1TestResult == 143)
 
-    val input = readInputLines("Day05")
+    val input = readInputLines("day05/Day05")
     part1(input).println()
 
-    val part2TestResult = part2(readInputLines("Day05_test"))
+    val part2TestResult = part2(readInputLines("day05/Day05_test"))
     "Part2 test result = $part2TestResult".println()
     check(part2TestResult == 123)
 

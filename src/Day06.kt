@@ -168,10 +168,10 @@ fun main() {
         return loops
     }
 
-    val testInput = readInputLines("Day06_test")
+    val testInput = readInputLines("day06/Day06_test")
     check(part1(testInput) == 41)
 
-    val input = readInputLines("Day06")
+    val input = readInputLines("day06/Day06")
     val resultPart1 = part1(input)
     resultPart1.println()
     check(4665 == resultPart1)
