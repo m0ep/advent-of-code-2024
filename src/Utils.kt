@@ -36,3 +36,11 @@ fun <T> T.checkResult(expected: T) {
         throw IllegalStateException("Check failed - Result should be equal to $expected but was $this")
     }
 }
+
+fun Any?.printHeader() {
+    val sep = "=".repeat(this.toString().length)
+    "".println()
+    sep.println()
+    this.println()
+    sep.println()
+}
