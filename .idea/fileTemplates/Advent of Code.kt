@@ -10,7 +10,7 @@ fun main() {
 
     part1(listOf("...")).checkResult(1)
 
-    val input = readInputLines("${Day}/Day${Day}")
+    val input = readInputLines("day${Day}/Day${Day}")
     part1(input).println()
     part2(input).println()
 }
