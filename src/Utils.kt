@@ -8,8 +8,9 @@ import kotlin.math.pow
  * Reads lines from the given input txt file.
  */
 fun readInputString(name: String) = Path("src/$name.txt").readText().trim()
-fun readInputLines(name: String) = readInputString(name).lines()
-
+fun readInputLines(name: String):List<String> = readInputString(name).lines()
+fun readInput2DMapChar(name: String):List<List<Char>> = readInputLines(name).map(String::toList)
+fun readInpput2DMapInt(name: String):List<List<Int>> = readInput2DMapChar(name).map{it.map(Char::digitToInt)}
 /**
  * Converts string to md5 hash.
  */
