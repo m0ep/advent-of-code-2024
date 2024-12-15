@@ -10,6 +10,7 @@ sourceSets {
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.9.0")
+    implementation("com.jakewharton.mosaic:mosaic-runtime:0.14.0")
 }
 
 tasks {

@@ -69,7 +69,7 @@ fun dirToChar(
 }
 
 
-fun parseMap(
+private fun parseMap(
     input: List<String>
 ): PuzzleInput06 {
     val map = input.map { it.toList() }

@@ -34,5 +34,7 @@ data class Vec2(
         return true
     }
 
-
+    override fun toString(): String {
+        return "($x, $y)"
+    }
 }
