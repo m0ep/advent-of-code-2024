@@ -12,4 +12,13 @@ enum class Direction {
             WEST -> Vec2(-1, 0)
         }
     }
+
+    fun toChar():Char{
+        return when(this){
+            NORTH -> '^'
+            EAST -> '>'
+            SOUTH -> 'v'
+            WEST -> '<'
+        }
+    }
 }
