@@ -1,3 +1,8 @@
+package day12
+
+import Vec2
+import println
+import readInput2DMapChar
 import kotlin.math.sign
 import kotlin.time.measureTimedValue
 

@@ -1,3 +1,9 @@
+package day11
+
+import checkResult
+import println
+import readInputString
+
 fun countDigits(
     value: ULong
 ): Int {

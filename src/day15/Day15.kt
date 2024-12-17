@@ -1,3 +1,12 @@
+package day15
+
+import Direction
+import Vec2
+import checkResult
+import mutableCopyOf
+import printHeader
+import println
+import readInputLines
 import java.util.stream.Stream
 
 private enum class TileD14 {
@@ -79,7 +88,7 @@ private data class Warehouse(
         return sb.toString().trim()
     }
 
-    fun inflate():Warehouse{
+    fun inflate(): Warehouse {
         val inflatedMap = mutableListOf<MutableList<TileD14>>()
         for (wRow in map) {
             val inflatedRow = mutableListOf<TileD14>()

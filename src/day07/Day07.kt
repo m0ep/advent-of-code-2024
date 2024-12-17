@@ -1,5 +1,12 @@
 @file:OptIn(ExperimentalUnsignedTypes::class)
 
+package day07
+
+import checkResult
+import pow
+import println
+import readInputLines
+
 private data class Equation(
     val result: ULong,
     val operants: List<ULong>

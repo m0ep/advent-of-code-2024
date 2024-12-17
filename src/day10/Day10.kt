@@ -1,3 +1,11 @@
+package day10
+
+import Vec2
+import checkResult
+import printHeader
+import println
+import readInput2DMapChar
+
 data class TopoMap(
     val map: List<List<Int>>
 ) {

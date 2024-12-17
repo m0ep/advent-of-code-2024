@@ -64,3 +64,14 @@ fun <T> T.validate(block: (T) -> Boolean, msg: String = "") : T{
 
     return this
 }
+
+fun ULong.pow(exp: ULong) : ULong{
+    var result = 1UL
+    var ctr = exp
+    while(0UL < ctr){
+        result *= this
+        ctr--
+    }
+
+    return result
+}
