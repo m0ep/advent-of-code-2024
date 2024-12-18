@@ -1,7 +1,7 @@
 package day15
 
 import Direction
-import Vec2
+import Vec2I
 import checkResult
 import mutableCopyOf
 import printHeader
@@ -38,20 +38,20 @@ private data class Warehouse(
     val height: Int
         get() = map.size
 
-    operator fun contains(pos: Vec2): Boolean = pos.x in 0..<width && pos.x in 0..<height
-    operator fun get(pos: Vec2): TileD14 = map[pos.y][pos.x]
-    operator fun set(pos: Vec2, tile: TileD14) {
+    operator fun contains(pos: Vec2I): Boolean = pos.x in 0..<width && pos.x in 0..<height
+    operator fun get(pos: Vec2I): TileD14 = map[pos.y][pos.x]
+    operator fun set(pos: Vec2I, tile: TileD14) {
         map[pos.y][pos.x] = tile
     }
 
-    fun isTile(pos: Vec2, tile: TileD14): Boolean = tile == this[pos]
+    fun isTile(pos: Vec2I, tile: TileD14): Boolean = tile == this[pos]
 
     fun copyMutable(): Warehouse = Warehouse(map.map { it.mutableCopyOf() }.toMutableList())
 
     fun toColorString(
-        robotPos: Vec2,
-        oldPositions: Set<Vec2> = setOf(),
-        newPositions: Set<Vec2> = setOf()
+        robotPos: Vec2I,
+        oldPositions: Set<Vec2I> = setOf(),
+        newPositions: Set<Vec2I> = setOf()
     ): String {
         val newColor = "\u001b[32m"
         val robotColor = "\u001b[36m"
@@ -61,7 +61,7 @@ private data class Warehouse(
         val sb = StringBuilder()
         for (y in 0..<height) {
             for (x in 0..<width) {
-                val pos = Vec2(x, y)
+                val pos = Vec2I(x, y)
                 val char = this[pos].toChar()
                 when (pos) {
                     robotPos -> sb.append(robotColor).append(char).append(reset)
@@ -161,10 +161,10 @@ private fun parseMap(
 
 private fun findRobotPos(
     warehouse: Warehouse
-): Vec2 {
+): Vec2I {
     for (y in 0..<warehouse.height) {
         for (x in 0..<warehouse.width) {
-            val pos = Vec2(x, y)
+            val pos = Vec2I(x, y)
             if (TileD14.ROBOT == warehouse[pos]) {
                 return pos
             }
@@ -175,33 +175,33 @@ private fun findRobotPos(
 }
 
 private data class Movable(
-    val positions: List<Vec2>,
+    val positions: List<Vec2I>,
     val tiles: List<TileD14>
 ) {
     constructor(
-        pos: Vec2,
+        pos: Vec2I,
         tile: TileD14
     ) : this(listOf(pos), listOf(tile))
 
     constructor(
-        pos1: Vec2, tile1: TileD14,
-        pos2: Vec2, tile2: TileD14
+        pos1: Vec2I, tile1: TileD14,
+        pos2: Vec2I, tile2: TileD14
     ) : this(listOf(pos1, pos2), listOf(tile1, tile2))
 
     fun move(warehouse: Warehouse, direction: Direction): Movable {
-        val newPositions = positions.map { it + direction.toVec2() }
+        val newPositions = positions.map { it + direction.toVec2I() }
         positions.forEach { warehouse[it] = TileD14.EMPTY }
         newPositions.withIndex().forEach { (i, p) -> warehouse[p] = tiles[i] }
         return Movable(newPositions, tiles)
     }
 
     fun canMove(warehouse: Warehouse, direction: Direction): Boolean =
-        positions.map { it + direction.toVec2() }
+        positions.map { it + direction.toVec2I() }
             .filter { it !in positions }
             .all { warehouse.isTile(it, TileD14.EMPTY) }
 
     fun isWallInPath(warehouse: Warehouse, direction: Direction): Boolean =
-        positions.any { warehouse.isTile(it + direction.toVec2(), TileD14.WALL) }
+        positions.any { warehouse.isTile(it + direction.toVec2I(), TileD14.WALL) }
 
     fun getCratesInPath(
         warehouse: Warehouse,
@@ -209,19 +209,19 @@ private data class Movable(
     ): List<Movable> {
         return positions.stream()
             .flatMap {
-                val nextPos = it + direction.toVec2()
+                val nextPos = it + direction.toVec2I()
                 val nextTile = warehouse[nextPos]
                 if (TileD14.CRATE_LEFT == nextTile) {
                     Stream.of(
                         Movable(
                             nextPos, TileD14.CRATE_LEFT,
-                            nextPos + Vec2(1, 0), TileD14.CRATE_RIGHT
+                            nextPos + Vec2I(1, 0), TileD14.CRATE_RIGHT
                         )
                     )
                 } else if (TileD14.CRATE_RIGHT == nextTile) {
                     Stream.of(
                         Movable(
-                            nextPos - Vec2(1, 0), TileD14.CRATE_LEFT,
+                            nextPos - Vec2I(1, 0), TileD14.CRATE_LEFT,
                             nextPos, TileD14.CRATE_RIGHT
                         )
                     )
@@ -242,9 +242,9 @@ fun main() {
         var robotPos = findRobotPos(warehouse)
         for (direction in directions) {
             //"next dir: ${direction.toChar()}".println()
-            val dirVec = direction.toVec2()
+            val dirVec = direction.toVec2I()
 
-            val checkedCrates = mutableSetOf<Vec2>()
+            val checkedCrates = mutableSetOf<Vec2I>()
             val moveStack = ArrayDeque(listOf(robotPos))
             while (moveStack.isNotEmpty()) {
                 val tilePos = moveStack.first()
@@ -277,7 +277,7 @@ fun main() {
         var result = 0
         for (y in 0..<warehouse.height) {
             for (x in 0..<warehouse.width) {
-                val pos = Vec2(x, y)
+                val pos = Vec2I(x, y)
                 if (TileD14.CRATE == warehouse[pos]) {
                     result += (100 * y + x)
                 }
@@ -331,7 +331,7 @@ fun main() {
                 workingWarehouse = moveWarehouse
             }
 
-            val nextRobotPos = robotPos + direction.toVec2()
+            val nextRobotPos = robotPos + direction.toVec2I()
             if (workingWarehouse.isTile(nextRobotPos, TileD14.ROBOT)) {
                 robotPos = nextRobotPos
             }
@@ -343,7 +343,7 @@ fun main() {
         var result = 0
         for (y in 0..<workingWarehouse.height) {
             for (x in 0..<workingWarehouse.width) {
-                val pos = Vec2(x, y)
+                val pos = Vec2I(x, y)
                 if (TileD14.CRATE_LEFT == workingWarehouse[pos]) {
                     result += (100 * y + x)
                 }

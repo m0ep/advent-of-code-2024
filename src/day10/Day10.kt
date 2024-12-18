@@ -1,6 +1,6 @@
 package day10
 
-import Vec2
+import Vec2I
 import checkResult
 import printHeader
 import println
@@ -16,14 +16,14 @@ data class TopoMap(
         get() = map[0].size
 
     fun getHeight(
-        pos: Vec2
+        pos: Vec2I
     ): Int {
 
         return map[pos.y][pos.x]
     }
 
     fun isValidPos(
-        pos: Vec2
+        pos: Vec2I
     ): Boolean {
         if (0 > pos.y || pos.y >= height) return false
         if (0 > pos.x || pos.x >= width) return false
@@ -39,12 +39,12 @@ data class VisitMap(
     val map = MutableList(height) { MutableList(width) { 0 } }
 
     fun get(
-        pos: Vec2
+        pos: Vec2I
     ): Int {
         return map[pos.y][pos.x]
     }
 
-    fun visit(pos: Vec2) {
+    fun visit(pos: Vec2I) {
         map[pos.y][pos.x]++
     }
 }
@@ -59,13 +59,13 @@ private fun readMap(name: String): TopoMap =
 
 private fun findPathToPeak(
     map: TopoMap,
-    pos: Vec2
-): Set<Vec2> {
+    pos: Vec2I
+): Set<Vec2I> {
     val currentHeight = map.getHeight(pos)
 
-    val result = mutableSetOf<Vec2>()
+    val result = mutableSetOf<Vec2I>()
 
-    val north = pos + Vec2(0, -1)
+    val north = pos + Vec2I(0, -1)
     if (map.isValidPos(north)) {
         val nextHeight = map.getHeight(north)
         if(1 == nextHeight - currentHeight){
@@ -77,7 +77,7 @@ private fun findPathToPeak(
         }
     }
 
-    val east = pos + Vec2(1, 0)
+    val east = pos + Vec2I(1, 0)
     if (map.isValidPos(east)) {
         val nextHeight = map.getHeight(east)
         if(1 == nextHeight - currentHeight){
@@ -89,7 +89,7 @@ private fun findPathToPeak(
         }
     }
 
-    val south = pos + Vec2(0, 1)
+    val south = pos + Vec2I(0, 1)
     if (map.isValidPos(south)) {
         val nextHeight = map.getHeight(south)
         if(1 == nextHeight - currentHeight){
@@ -101,7 +101,7 @@ private fun findPathToPeak(
         }
     }
 
-    val west = pos + Vec2(-1, 0)
+    val west = pos + Vec2I(-1, 0)
     if (map.isValidPos(west)) {
         val nextHeight = map.getHeight(west)
         if(1 == nextHeight - currentHeight){
@@ -119,12 +119,12 @@ private fun findPathToPeak(
 fun findPathToTrailHead(
     topoMap: TopoMap,
     visitMap: VisitMap,
-    pos: Vec2
+    pos: Vec2I
 ) {
     visitMap.visit(pos)
     val currentHeight = topoMap.getHeight(pos)
 
-    val north = pos + Vec2(0, -1)
+    val north = pos + Vec2I(0, -1)
     if (topoMap.isValidPos(north)) {
         val nextHeight = topoMap.getHeight(north)
         if (1 == currentHeight - nextHeight) {
@@ -132,7 +132,7 @@ fun findPathToTrailHead(
         }
     }
 
-    val east = pos + Vec2(1, 0)
+    val east = pos + Vec2I(1, 0)
     if (topoMap.isValidPos(east)) {
         val nextHeight = topoMap.getHeight(east)
         if (1 == currentHeight - nextHeight) {
@@ -140,7 +140,7 @@ fun findPathToTrailHead(
         }
     }
 
-    val south = pos + Vec2(0, 1)
+    val south = pos + Vec2I(0, 1)
     if (topoMap.isValidPos(south)) {
         val nextHeight = topoMap.getHeight(south)
         if (1 == currentHeight - nextHeight) {
@@ -148,7 +148,7 @@ fun findPathToTrailHead(
         }
     }
 
-    val west = pos + Vec2(-1, 0)
+    val west = pos + Vec2I(-1, 0)
     if (topoMap.isValidPos(west)) {
         val nextHeight = topoMap.getHeight(west)
         if (1 == currentHeight - nextHeight) {
@@ -165,7 +165,7 @@ fun main() {
         val startPositions = topoMap.map.flatMapIndexed { y, l ->
             l.withIndex()
                 .filter { v -> 0 == v.value }
-                .map { Vec2(it.index, y) }
+                .map { Vec2I(it.index, y) }
         }
 
         return startPositions
@@ -176,11 +176,11 @@ fun main() {
     fun part2(
         topoMap: TopoMap
     ): Int {
-        val trailHeads = mutableSetOf<Vec2>()
-        val trailPeaks = mutableSetOf<Vec2>()
+        val trailHeads = mutableSetOf<Vec2I>()
+        val trailPeaks = mutableSetOf<Vec2I>()
         for (y in 0 until topoMap.height) {
             for (x in 0 until topoMap.width) {
-                val position = Vec2(x, y)
+                val position = Vec2I(x, y)
                 val height = topoMap.getHeight(position)
                 if (0 == height) {
                     trailHeads.add(position)

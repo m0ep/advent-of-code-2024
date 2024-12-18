@@ -1,6 +1,6 @@
 package day13
 
-import Vec2l
+import Vec2L
 import checkResult
 import println
 import readInputLines
@@ -8,27 +8,27 @@ import java.util.*
 import kotlin.collections.ArrayDeque
 
 private data class ClawMachine(
-    val aBtnMove: Vec2l,
-    val bBtnMove: Vec2l,
-    val prizePos: Vec2l
+    val aBtnMove: Vec2L,
+    val bBtnMove: Vec2L,
+    val prizePos: Vec2L
 )
 
 private fun parseButtonMove(
     line: String
-): Vec2l {
+): Vec2L {
     val regex = "^Button ([AB]): X([+-]\\d+), Y([+-]\\d+)$".toRegex()
     val matchRes = regex.find(line) ?: throw AssertionError()
     val (_, x, y) = matchRes.destructured
-    return Vec2l(x.toLong(), y.toLong())
+    return Vec2L(x.toLong(), y.toLong())
 }
 
 private fun parsePrizePos(
     line: String
-): Vec2l {
+): Vec2L {
     val regex = "^Prize: X=(\\d+), Y=(\\d+)\$".toRegex()
     val matchRes = regex.find(line) ?: throw AssertionError()
     val (x, y) = matchRes.destructured
-    return Vec2l(x.toLong(), y.toLong())
+    return Vec2L(x.toLong(), y.toLong())
 }
 
 private fun parseInput(
@@ -55,7 +55,7 @@ private fun parseInput(
 
 private fun calcMinMoves(
     clawMachine: ClawMachine
-): Optional<Vec2l> {
+): Optional<Vec2L> {
     val (a, b, t) = clawMachine
 
     // #A = (by * tx - bx * ty) / (ax * by - ay * bx)
@@ -73,7 +73,7 @@ private fun calcMinMoves(
     }
 
     return Optional.of(
-        Vec2l(
+        Vec2L(
             (nominatorA / denominatorA),
             (nominatroB / denominatorB)
         )
@@ -94,7 +94,7 @@ fun main() {
     }
 
     fun part2(input: List<ClawMachine>): Long {
-        val corr = Vec2l(10000000000000L, 10000000000000L)
+        val corr = Vec2L(10000000000000L, 10000000000000L)
         return input
             .map { it.copy(prizePos = (it.prizePos + corr)) }
             .map(::calcMinMoves)
@@ -105,9 +105,9 @@ fun main() {
             }
     }
 
-    parseButtonMove("Button A: X+94, Y+34").checkResult(Vec2l(94, 34))
-    parseButtonMove("Button B: X-32, Y+42").checkResult(Vec2l(-32, 42))
-    parsePrizePos("Prize: X=18641, Y=10279").checkResult(Vec2l(18641, 10279))
+    parseButtonMove("Button A: X+94, Y+34").checkResult(Vec2L(94, 34))
+    parseButtonMove("Button B: X-32, Y+42").checkResult(Vec2L(-32, 42))
+    parsePrizePos("Prize: X=18641, Y=10279").checkResult(Vec2L(18641, 10279))
     part1(parseInput("day13/part1_test1")).checkResult(480)
 
     part1(parseInput("day13/Day13")).println()

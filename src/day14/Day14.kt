@@ -1,6 +1,6 @@
 package day14
 
-import Vec2
+import Vec2I
 import checkResult
 import copyOf
 import kotlinx.coroutines.launch
@@ -13,8 +13,8 @@ import kotlin.math.max
 import kotlin.time.measureTimedValue
 
 private data class Robot(
-    val pos: Vec2,
-    val vel: Vec2
+    val pos: Vec2I,
+    val vel: Vec2I
 )
 
 private fun parseRobotInput(
@@ -26,22 +26,22 @@ private fun parseRobotInput(
     val (px, py, vx, vy) = matchResult.destructured
 
     return Robot(
-        Vec2(px.toInt(), py.toInt()),
-        Vec2(vx.toInt(), vy.toInt())
+        Vec2I(px.toInt(), py.toInt()),
+        Vec2I(vx.toInt(), vy.toInt())
     )
 }
 
 private fun calcMapSize(
     robots: List<Robot>
-): Vec2 {
-    return robots.fold(Vec2(0, 0)) { a, r ->
-        Vec2(max(a.x, r.pos.x), max(a.y, r.pos.y))
-    }.let { it + Vec2(1, 1) }
+): Vec2I {
+    return robots.fold(Vec2I(0, 0)) { a, r ->
+        Vec2I(max(a.x, r.pos.x), max(a.y, r.pos.y))
+    }.let { it + Vec2I(1, 1) }
 }
 
 private fun simulateRobot(
     robot: Robot,
-    mapSize: Vec2
+    mapSize: Vec2I
 ): Robot {
     val fixPos: (Int, Int) -> Int = { p, w ->
         if (0 > p) {
@@ -58,7 +58,7 @@ private fun simulateRobot(
 
 
     return Robot(
-        Vec2(
+        Vec2I(
             fixPos(nextPos.x, mapSize.x),
             fixPos(nextPos.y, mapSize.y)
         ), robot.vel
@@ -67,7 +67,7 @@ private fun simulateRobot(
 
 private fun simulateSeconds(
     robots: List<Robot>,
-    mapSize: Vec2,
+    mapSize: Vec2I,
     seconds: Int
 ): List<Robot> = runBlocking {
     val result = mutableListOf<Robot>()
@@ -85,7 +85,7 @@ private fun simulateSeconds(
 
 private fun printMap(
     robots: List<Robot>,
-    mapSize: Vec2
+    mapSize: Vec2I
 ) {
     val map = MutableList(mapSize.y) { MutableList(mapSize.x) { 0 } }
     robots.forEach { r -> map[r.pos.y][r.pos.x]++ }
@@ -100,14 +100,14 @@ private fun printMap(
 }
 
 private data class Quadrant(
-    val min: Vec2,
-    val max: Vec2
+    val min: Vec2I,
+    val max: Vec2I
 ) {
-    fun contains(pos: Vec2): Boolean = pos.x in min.x..max.x && pos.y in min.y..max.y
+    fun contains(pos: Vec2I): Boolean = pos.x in min.x..max.x && pos.y in min.y..max.y
 }
 
 private fun calcQuadrants(
-    mapSize: Vec2,
+    mapSize: Vec2I,
 ): List<Quadrant> {
     val w = mapSize.x
     val hw = w / 2
@@ -116,18 +116,18 @@ private fun calcQuadrants(
 
     return (0..3).map { quadrant ->
         val min = when (quadrant) {
-            0 -> Vec2(0, 0)
-            1 -> Vec2(w - hw, 0)
-            2 -> Vec2(w - hw, h - hh)
-            3 -> Vec2(0, h - hh)
+            0 -> Vec2I(0, 0)
+            1 -> Vec2I(w - hw, 0)
+            2 -> Vec2I(w - hw, h - hh)
+            3 -> Vec2I(0, h - hh)
             else -> throw AssertionError()
         }
 
         val max = when (quadrant) {
-            0 -> Vec2(hw - 1, hh - 1)
-            1 -> Vec2(w - 1, hh - 1)
-            2 -> Vec2(w - 1, h - 1)
-            3 -> Vec2(hw - 1, h - 1)
+            0 -> Vec2I(hw - 1, hh - 1)
+            1 -> Vec2I(w - 1, hh - 1)
+            2 -> Vec2I(w - 1, h - 1)
+            3 -> Vec2I(hw - 1, h - 1)
             else -> throw AssertionError()
         }
 
@@ -153,7 +153,7 @@ private fun findNumDirectNeighbours(
 fun main() {
     fun part1(
         input: List<Robot>,
-        mapSize: Vec2
+        mapSize: Vec2I
     ): Int {
         val simulationRes = simulateSeconds(input, mapSize, 100)
         printMap(simulationRes, mapSize)
@@ -173,7 +173,7 @@ fun main() {
 
     fun part2(
         input: List<Robot>,
-        mapSize: Vec2
+        mapSize: Vec2I
     ): Int {
         var lastSimulationResult = input.copyOf()
         var numDirectNeighboursMax = Int.MIN_VALUE
@@ -198,11 +198,11 @@ fun main() {
         return numSimulatedSec
     }
 
-    parseRobotInput("p=0,4 v=3,-3").checkResult(Robot(Vec2(0, 4), Vec2(3, -3)))
+    parseRobotInput("p=0,4 v=3,-3").checkResult(Robot(Vec2I(0, 4), Vec2I(3, -3)))
 
     val robot = parseRobotInput("p=2,4 v=2,-3")
-    simulateSeconds(listOf(robot), Vec2(11, 7), 5)
-        .checkResult(listOf(Robot(Vec2(1, 3), Vec2(2, -3))))
+    simulateSeconds(listOf(robot), Vec2I(11, 7), 5)
+        .checkResult(listOf(Robot(Vec2I(1, 3), Vec2I(2, -3))))
 
     val part1Test1Robots = readInputLines("day14/part1_test1").map(::parseRobotInput)
     val part1Test1MapSize = part1Test1Robots.let(::calcMapSize)

@@ -1,13 +1,13 @@
 package day16
 
 import Direction
-import Vec2
+import Vec2I
 import checkResult
 import println
 import readInput2DMapChar
 
 private data class Node2D(
-    var pos: Vec2,
+    var pos: Vec2I,
     var neighbors: MutableMap<Direction, Node2D> = mutableMapOf()
 ) {
     operator fun get(dir: Direction): Node2D? = neighbors[dir]
@@ -48,7 +48,7 @@ private data class Node2D(
 private data class Maze(
     val width: Int,
     val height: Int,
-    val nodes: Map<Vec2, Node2D>,
+    val nodes: Map<Vec2I, Node2D>,
     val start: Node2D,
     val end: Node2D
 ) {
@@ -56,7 +56,7 @@ private data class Maze(
         val sb = StringBuilder()
         for (y in 0..<height) {
             for (x in 0..<width) {
-                val pos = Vec2(x, y)
+                val pos = Vec2I(x, y)
                 if (pos in nodes) {
                     if (pos == start.pos) {
                         sb.append("S")
@@ -85,7 +85,7 @@ private data class Maze(
         val sb = StringBuilder()
         for (y in 0..<height) {
             for (x in 0..<width) {
-                val pos = Vec2(x, y)
+                val pos = Vec2I(x, y)
                 if (pos in nodes) {
                     when (pos) {
                         in dirMap -> sb.append(dirMap[pos]!!.toChar())
@@ -109,7 +109,7 @@ private data class Maze(
         val sb = StringBuilder()
         for (y in 0..<height) {
             for (x in 0..<width) {
-                val pos = Vec2(x, y)
+                val pos = Vec2I(x, y)
                 if (pos in nodes) {
                     if (nodes[pos] in nodesToDisplay) {
                         sb.append('O')
@@ -133,10 +133,10 @@ private fun parseMaze(name: String): Maze {
 
     var startNode: Node2D? = null
     var endNode: Node2D? = null
-    val posToNode = mutableMapOf<Vec2, Node2D>()
+    val posToNode = mutableMapOf<Vec2I, Node2D>()
     for (y in map.indices) {
         for (x in map[y].indices) {
-            val pos = Vec2(x, y)
+            val pos = Vec2I(x, y)
             val char = map[y][x]
             if ('#' == char) continue
 

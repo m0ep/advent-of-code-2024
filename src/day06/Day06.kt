@@ -1,23 +1,23 @@
 package day06
 
-import Vec2
+import Vec2I
 import println
 import readInputLines
 
 typealias PuzzleMap06 = List<List<Char>>
 
-val VEC_UP = Vec2(0, -1)
-val VEC_DOWN = Vec2(0, 1)
-val VEC_LEFT = Vec2(-1, 0)
-val VEC_RIGHT = Vec2(1, 0)
+val VEC_UP = Vec2I(0, -1)
+val VEC_DOWN = Vec2I(0, 1)
+val VEC_LEFT = Vec2I(-1, 0)
+val VEC_RIGHT = Vec2I(1, 0)
 
 class LoopDetectedException : Exception()
 
 data class PuzzleInput06(
     val map: PuzzleMap06,
-    val obstacles: List<Vec2>,
-    val guardStartPos: Vec2,
-    val guardStartDir: Vec2
+    val obstacles: List<Vec2I>,
+    val guardStartPos: Vec2I,
+    val guardStartDir: Vec2I
 ) {
     fun toGuard(): Guard {
         return Guard(guardStartPos, guardStartDir)
@@ -29,8 +29,8 @@ data class PuzzleInput06(
 }
 
 data class Guard(
-    val pos: Vec2,
-    val direction: Vec2
+    val pos: Vec2I,
+    val direction: Vec2I
 ) {
     fun turnClockwise(): Guard {
         when (direction) {
@@ -47,7 +47,7 @@ data class Guard(
 }
 
 fun isPosInMap(
-    pos: Vec2,
+    pos: Vec2I,
     map: PuzzleMap06
 ): Boolean {
     if (0 > pos.y || pos.y >= map.size) {
@@ -62,7 +62,7 @@ fun isPosInMap(
 }
 
 fun dirToChar(
-    value: Vec2
+    value: Vec2I
 ) : Char {
     when (value) {
         VEC_LEFT -> return '<'
@@ -80,15 +80,15 @@ private fun parseMap(
 ): PuzzleInput06 {
     val map = input.map { it.toList() }
 
-    var guardStartPos: Vec2? = null
-    var guardStartDir: Vec2? = null
-    val obstaclePositions = mutableListOf<Vec2>()
+    var guardStartPos: Vec2I? = null
+    var guardStartDir: Vec2I? = null
+    val obstaclePositions = mutableListOf<Vec2I>()
 
     // find guard and obstacles
     input.withIndex().forEach({ (y, line) ->
         line.withIndex().forEach({ (x, char) ->
             if (setOf('<', '>', '^', 'v').contains(char)) {
-                guardStartPos = Vec2(x, y)
+                guardStartPos = Vec2I(x, y)
 
                 when (char) {
                     '<' -> guardStartDir = VEC_LEFT
@@ -97,7 +97,7 @@ private fun parseMap(
                     'v' -> guardStartDir = VEC_DOWN
                 }
             } else if ('#' == char) {
-                obstaclePositions.add(Vec2(x, y))
+                obstaclePositions.add(Vec2I(x, y))
             }
         })
     })
