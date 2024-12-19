@@ -1,9 +1,9 @@
 package day17
 
-import checkResult
-import pow
-import println
-import readInputLines
+import utils.checkResult
+import utils.pow
+import utils.println
+import utils.readInputLines
 
 enum class OpMode {
     LITERAL,

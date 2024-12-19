@@ -1,7 +1,7 @@
 package day03
 
-import println
-import readInputString
+import utils.println
+import utils.readInputString
 
 fun main() {
     fun part1(input: String): Int {

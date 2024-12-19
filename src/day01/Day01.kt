@@ -1,7 +1,7 @@
 package day01
 
-import println
-import readInputLines
+import utils.println
+import utils.readInputLines
 import kotlin.math.abs
 
 private data class ParsedInput(

@@ -2,10 +2,10 @@
 
 package day07
 
-import checkResult
-import pow
-import println
-import readInputLines
+import utils.checkResult
+import utils.pow
+import utils.println
+import utils.readInputLines
 
 private data class Equation(
     val result: ULong,

@@ -1,3 +1,5 @@
+package utils
+
 class Maze<T>(
     val data: MutableList<MutableList<T>>
 ) {
@@ -78,9 +80,9 @@ class Maze<T>(
         return path
     }
 
-    fun toStringWithPaths(
+    fun renderAsString(
         renderer: (T) -> Char,
-        pathSpecs: List<Pair<List<Vec2I>, Char>>
+        pathSpecs: List<Pair<List<Vec2I>, Char>> = listOf()
     ): String {
         val sb = StringBuilder()
         for (y in 0..<height) {
@@ -104,6 +106,4 @@ class Maze<T>(
 
         return sb.toString().trimEnd()
     }
-
-    fun toString(renderer: (T) -> Char) = toStringWithPaths(renderer, listOf())
 }

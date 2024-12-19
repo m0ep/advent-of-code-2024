@@ -1,10 +1,10 @@
 package day16
 
-import Direction
-import Vec2I
-import checkResult
-import println
-import readInput2DMapChar
+import utils.Direction
+import utils.Vec2I
+import utils.checkResult
+import utils.println
+import utils.readInput2DMapChar
 
 private data class Node2D(
     var pos: Vec2I,

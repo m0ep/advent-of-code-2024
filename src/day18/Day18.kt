@@ -1,3 +1,5 @@
+import utils.*
+
 enum class CellState(
     val char: Char
 ) {
@@ -42,7 +44,7 @@ fun main() {
 
         val path = memoryMap.findShortestPathBsf(startPos, endPos, setOf(CellState.CORRUPTED))
 
-        memoryMap.toStringWithPaths(CellState::char, listOf(path to 'O')).println()
+        memoryMap.renderAsString(CellState::char, listOf(path to 'O')).println()
         return path.size - 1
     }
 

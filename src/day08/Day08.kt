@@ -1,10 +1,10 @@
 package day08
 
-import Vec2I
-import checkResult
-import printHeader
-import println
-import readInputLines
+import utils.Vec2I
+import utils.checkResult
+import utils.printHeader
+import utils.println
+import utils.readInputLines
 
 sealed class Tile {
     object Empty : Tile()

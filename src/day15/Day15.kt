@@ -1,12 +1,12 @@
 package day15
 
-import Direction
-import Vec2I
-import checkResult
-import mutableCopyOf
-import printHeader
-import println
-import readInputLines
+import utils.Direction
+import utils.Vec2I
+import utils.checkResult
+import utils.mutableCopyOf
+import utils.printHeader
+import utils.println
+import utils.readInputLines
 import java.util.stream.Stream
 
 private enum class TileD14 {

@@ -1,6 +1,6 @@
 package day02
 
-import readInputLines
+import utils.readInputLines
 import kotlin.math.abs
 
 enum class Ordering {
