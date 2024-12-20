@@ -1,9 +1,13 @@
 package utils
 
-class Maze<T>(
-    val data: MutableList<MutableList<T>>
-) {
+class Maze<T>{
+    constructor(input: List<List<T>>) {
+        data = input.map { it.toMutableList() }.toMutableList()
+    }
+
     constructor(w: Int, h: Int, value: T) : this(MutableList(h) { MutableList(w){value} })
+
+    val data: MutableList<MutableList<T>>
 
     val width: Int
         get() = data[0].size
@@ -25,6 +29,18 @@ class Maze<T>(
                 data[y][x] = value
             }
         }
+    }
+
+    fun findFirst(tile: T):Vec2I{
+        for (y in data.indices) {
+            for(x in data[y].indices){
+                if(data[y][x] == tile){
+                    return Vec2I(x,y)
+                }
+            }
+        }
+
+        throw NoSuchElementException()
     }
 
     // applications
