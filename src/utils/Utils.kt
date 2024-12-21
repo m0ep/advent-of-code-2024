@@ -36,7 +36,7 @@ fun Int.pow(n: Int): Int = n.toDouble().pow(this).toInt()
 
 fun <T> T.checkResult(expected: T) {
     if (this != expected) {
-        throw IllegalStateException("Check failed - Result should be equal to $expected but was $this")
+        throw IllegalStateException("Check failed - Result was $this but should be $expected")
     }
 }
 
