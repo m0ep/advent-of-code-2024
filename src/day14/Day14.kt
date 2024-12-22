@@ -141,7 +141,7 @@ private fun findNumDirectNeighbours(
     val result = mutableListOf<Int>()
 
     for (robot in robots) {
-        robots.filter { robot.pos.isDirectNeighbour(it.pos) }
+        robots.filter { robot.pos.isNeighbor(it.pos) }
             .distinctBy { it.pos }
             .count()
             .let { result.add(it) }
