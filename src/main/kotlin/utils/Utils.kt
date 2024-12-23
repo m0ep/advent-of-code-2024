@@ -32,6 +32,7 @@ fun Any?.println(tag: String) {
 fun <T> List<T>.copyOf() : List<T> = mutableListOf<T>().also { it.addAll(this) }
 fun <T> List<T>.mutableCopyOf(): MutableList<T> = mutableListOf<T>().also { it.addAll(this) }
 
+
 fun Int.pow(n: Int): Int = n.toDouble().pow(this).toInt()
 
 inline fun <reified T> T.checkResult(expected: T) {
