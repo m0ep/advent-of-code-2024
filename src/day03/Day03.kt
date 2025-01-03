@@ -1,3 +1,8 @@
+package day03
+
+import println
+import readInputString
+
 fun main() {
     fun part1(input: String): Int {
         val regex = Regex("mul\\(([0-9]+),([0-9]+)\\)")

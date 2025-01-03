@@ -1,3 +1,11 @@
+package day16
+
+import Direction
+import Vec2
+import checkResult
+import println
+import readInput2DMapChar
+
 private data class Node2D(
     var pos: Vec2,
     var neighbors: MutableMap<Direction, Node2D> = mutableMapOf()

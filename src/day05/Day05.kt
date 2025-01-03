@@ -1,3 +1,8 @@
+package day05
+
+import println
+import readInputLines
+
 data class PuzzleInput(
     val orderingMap: Map<Int, Set<Int>>,
     val updates: List<List<Int>>

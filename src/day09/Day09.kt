@@ -1,3 +1,11 @@
+package day09
+
+import checkResult
+import mutableCopyOf
+import println
+import readInputString
+import truncate
+import validate
 import kotlin.math.min
 
 private data class DataChunk(

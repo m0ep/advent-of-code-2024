@@ -1,7 +1,14 @@
+package day14
+
+import Vec2
+import checkResult
+import copyOf
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import println
+import readInputLines
 import kotlin.math.max
 import kotlin.time.measureTimedValue
 

@@ -1,3 +1,9 @@
+package day06
+
+import Vec2
+import println
+import readInputLines
+
 typealias PuzzleMap06 = List<List<Char>>
 
 val VEC_UP = Vec2(0, -1)

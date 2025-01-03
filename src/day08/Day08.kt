@@ -1,3 +1,11 @@
+package day08
+
+import Vec2
+import checkResult
+import printHeader
+import println
+import readInputLines
+
 sealed class Tile {
     object Empty : Tile()
     data class Antenna(val frequency: Char) : Tile()
