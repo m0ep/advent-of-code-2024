@@ -44,3 +44,17 @@ fun Any?.printHeader() {
     this.println()
     sep.println()
 }
+
+fun String.truncate(length: Int): String = if(length >= this.length) this else this.substring(0, length)
+
+fun <T> T.validate(block: (T) -> Boolean, msg: String = "") : T{
+    if(!block(this)){
+        if(msg.isNotBlank()){
+            msg.println()
+        }
+
+        throw IllegalStateException()
+    }
+
+    return this
+}
