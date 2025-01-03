@@ -46,6 +46,11 @@ fun Any?.printHeader() {
     sep.println()
 }
 
+fun Any?.toHeader():String {
+    val sep = "=".repeat(this.toString().length)
+    return "${sep}\n${this}\n${sep}"
+}
+
 fun String.truncate(length: Int): String = if(length >= this.length) this else this.substring(0, length)
 
 fun <T> T.validate(block: (T) -> Boolean, msg: String = "") : T{

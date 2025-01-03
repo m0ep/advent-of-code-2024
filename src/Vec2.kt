@@ -1,3 +1,5 @@
+import kotlin.math.abs
+
 data class Vec2(
     val x: Int,
     val y: Int,
@@ -6,6 +8,19 @@ data class Vec2(
     operator fun minus(other: Vec2) = Vec2(x - other.x, y - other.y)
     operator fun unaryMinus() = Vec2(-x, -y)
     operator fun times(scalar: Int) = Vec2(x * scalar, y * scalar)
+
+    fun distSqrt(other: Vec2): Int {
+        val dx = other.x - this.x
+        val dy = other.y - this.y
+        return (dx * dx) + (dy * dy)
+    }
+
+
+    fun isDirectNeighbour(other: Vec2): Boolean {
+        val dx = abs(this.x - other.x)
+        val dy = abs(this.y - other.y)
+        return 1 >= dx && 1 >= dy && !(0 == dx && 0 == dy)
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -18,5 +33,6 @@ data class Vec2(
 
         return true
     }
+
 
 }
