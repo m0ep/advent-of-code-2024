@@ -12,19 +12,27 @@ data class Vec2I(
     operator fun times(scalar: Int) = Vec2I(x * scalar, y * scalar)
     operator fun plus(direction: Direction) = this + direction.toVec2I()
 
-    fun distSqrt(other: Vec2I): Int {
+    fun distSqrt(
+        other: Vec2I
+    ): Int {
         val dx = other.x - this.x
         val dy = other.y - this.y
         return (dx * dx) + (dy * dy)
     }
 
-    fun isDirectNeighbour(other: Vec2I): Boolean {
+    fun isNeighbor(
+        other: Vec2I
+    ): Boolean {
         val dx = abs(this.x - other.x)
         val dy = abs(this.y - other.y)
         return 1 >= dx && 1 >= dy && !(0 == dx && 0 == dy)
     }
 
-    override fun equals(other: Any?): Boolean {
+    fun neighbors(): Set<Vec2I> = Direction.entries.map { this + it }.toSet()
+
+    override fun equals(
+        other: Any?
+    ): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
@@ -32,7 +40,6 @@ data class Vec2I(
 
         if (x != other.x) return false
         if (y != other.y) return false
-
         return true
     }
 
