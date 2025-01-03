@@ -34,9 +34,9 @@ fun <T> List<T>.mutableCopyOf(): MutableList<T> = mutableListOf<T>().also { it.a
 
 fun Int.pow(n: Int): Int = n.toDouble().pow(this).toInt()
 
-fun <T> T.checkResult(expected: T) {
+inline fun <reified T> T.checkResult(expected: T) {
     if (this != expected) {
-        throw IllegalStateException("Check failed - Result was $this but should be $expected")
+        throw IllegalStateException("Check failed - Result was $this (${this!!::class.simpleName}) but expected to be $expected (${expected!!::class.simpleName})")
     }
 }
 
@@ -77,3 +77,5 @@ fun ULong.pow(exp: ULong) : ULong{
 
     return result
 }
+
+fun ULong.rndToInt(): ULong = this and Int.MAX_VALUE.toULong()
