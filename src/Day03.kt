@@ -34,7 +34,7 @@ fun main() {
     check(part1("mul ( 2 , 4 )") == 0)
     check(part1("mul(6,9!") == 0)
 
-    val input = readInputString("Day03")
+    val input = readInputString("day03/Day03")
     part1(input).println()
     part2(input).println()
 }
