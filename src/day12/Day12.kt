@@ -1,6 +1,6 @@
 package day12
 
-import Vec2
+import Vec2I
 import println
 import readInput2DMapChar
 import kotlin.math.sign
@@ -8,11 +8,11 @@ import kotlin.time.measureTimedValue
 
 typealias Plant = Char
 
-fun genAdjacent(pos: Vec2): List<Vec2> = listOf(
-    pos + Vec2(0, -1), // north
-    pos + Vec2(1, 0), // east
-    pos + Vec2(0, 1), // south
-    pos + Vec2(-1, 0) // west
+fun genAdjacent(pos: Vec2I): List<Vec2I> = listOf(
+    pos + Vec2I(0, -1), // north
+    pos + Vec2I(1, 0), // east
+    pos + Vec2I(0, 1), // south
+    pos + Vec2I(-1, 0) // west
 )
 
 private data class Farm(
@@ -23,12 +23,12 @@ private data class Farm(
     val height: Int
         get() = plotMap.size
 
-    fun get(pos: Vec2): Plant = plotMap[pos.y][pos.x]
-    fun isInside(pos: Vec2) = pos.x in 0..<width && pos.y in 0..<height
+    fun get(pos: Vec2I): Plant = plotMap[pos.y][pos.x]
+    fun isInside(pos: Vec2I) = pos.x in 0..<width && pos.y in 0..<height
 }
 
 private data class Plot(
-    val pos: Vec2,
+    val pos: Vec2I,
     val borders: List<Boolean>
 ) {
     val hasBorders: Boolean = borders.any { it }
@@ -48,10 +48,10 @@ private data class Region(
 }
 
 private data class Edge(
-    val from: Vec2,
-    val to: Vec2
+    val from: Vec2I,
+    val to: Vec2I
 ) {
-    val dir: Vec2 = Vec2(
+    val dir: Vec2I = Vec2I(
         (to.x - from.x).sign,
         (to.y - from.y).sign
     )
@@ -62,11 +62,11 @@ private data class Edge(
 }
 
 private fun calculateRegions(farm: Farm): List<Region> {
-    val processedPlog = mutableSetOf<Vec2>()
+    val processedPlog = mutableSetOf<Vec2I>()
     val regions = mutableListOf<Region>()
     for (x in 0..<farm.width) {
         for (y in 0..<farm.height) {
-            val pos = Vec2(x, y)
+            val pos = Vec2I(x, y)
             if (processedPlog.contains(pos)) continue
 
             val floodPlant = farm.get(pos)
@@ -108,7 +108,7 @@ private fun calcEdges(region: Region): Set<Edge> {
             edges.add(
                 Edge(
                     plot.pos,
-                    plot.pos + Vec2(1, 0)
+                    plot.pos + Vec2I(1, 0)
                 )
             )
         }
@@ -116,8 +116,8 @@ private fun calcEdges(region: Region): Set<Edge> {
         if (plot.borders[1]) {
             edges.add(
                 Edge(
-                    plot.pos + Vec2(1, 0),
-                    plot.pos + Vec2(1, 1)
+                    plot.pos + Vec2I(1, 0),
+                    plot.pos + Vec2I(1, 1)
                 )
             )
         }
@@ -125,8 +125,8 @@ private fun calcEdges(region: Region): Set<Edge> {
         if (plot.borders[2]) {
             edges.add(
                 Edge(
-                    plot.pos + Vec2(1, 1),
-                    plot.pos + Vec2(0, 1)
+                    plot.pos + Vec2I(1, 1),
+                    plot.pos + Vec2I(0, 1)
                 )
             )
         }
@@ -134,7 +134,7 @@ private fun calcEdges(region: Region): Set<Edge> {
         if (plot.borders[3]) {
             edges.add(
                 Edge(
-                    plot.pos + Vec2(0, 1),
+                    plot.pos + Vec2I(0, 1),
                     plot.pos
                 )
             )

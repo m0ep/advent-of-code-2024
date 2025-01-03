@@ -1,6 +1,6 @@
 package day08
 
-import Vec2
+import Vec2I
 import checkResult
 import printHeader
 import println
@@ -35,17 +35,17 @@ data class TileMap(
     val width = tiles.first().size
     val height = tiles.size
 
-    fun withPosition(): Sequence<Pair<Vec2, Tile>> {
+    fun withPosition(): Sequence<Pair<Vec2I, Tile>> {
         return tiles.asSequence()
             .withIndex()
             .flatMap { (y, line) ->
                 line.withIndex().map { (x, tile) ->
-                    Vec2(x, y) to tile
+                    Vec2I(x, y) to tile
                 }
             }
     }
 
-    fun isPositionOnMap(pos: Vec2) = pos.y in 0..<height && pos.x in 0..<width
+    fun isPositionOnMap(pos: Vec2I) = pos.y in 0..<height && pos.x in 0..<width
 
     override fun toString(): String {
         return tiles.joinToString("\n") {
@@ -76,7 +76,7 @@ private fun <T> permutation(
 }
 
 private fun printPositions(
-    positions: List<Vec2>,
+    positions: List<Vec2I>,
     width: Int,
     height: Int,
 ) {
