@@ -1,41 +1,13 @@
 package day22
 
-import utils.checkResult
-import utils.println
-import utils.readInputLines
 import utils.rndToInt
 
-data class Input(
-    val seeds: List<ULong>
+class Day22(
+    private val input: List<ULong>
 ) {
-    companion object {
-        fun parse(name: String): Input {
-            return readInputLines(name)
-                .filter(String::isNotBlank)
-                .map(String::toULong)
-                .let { Input(it) }
-        }
-    }
-}
-
-fun nextSecret(
-    seed: ULong
-): ULong {
-    val mix = { a: ULong, b: ULong -> a xor b }
-    val prune = { a: ULong -> a and 16777215UL }
-
-    var secret = prune(mix(seed, seed.shl(6)))
-    secret = prune(mix(secret, secret.shr(5).rndToInt()))
-    secret = prune(mix(secret, secret.shl(11)))
-    return secret
-}
-
-fun ULong.toBananaPrice() = this % 10UL
-
-fun main() {
-    fun part1(input: Input): ULong {
+    fun part1(): ULong {
         var total = 0UL
-        for (seed in input.seeds) {
+        for (seed in input) {
             val secret = (0 until 2000).fold(seed) { a, _ -> nextSecret(a) }
             total += secret
         }
@@ -43,10 +15,10 @@ fun main() {
         return total
     }
 
-    fun part2(input: Input): ULong {
+    fun part2(): ULong {
         val pricesOfBuyers = mutableListOf<List<Pair<ULong, Int>>>()
 
-        for (seed in input.seeds) {
+        for (seed in input) {
             val priceChanges = mutableListOf<Pair<ULong, Int>>()
             var currentSeed = seed
             var currentSeedPrice = seed.toBananaPrice()
@@ -81,9 +53,17 @@ fun main() {
         return max.value
     }
 
-    part1(Input.parse("day22/part1_test1")).checkResult(37327623UL)
-    part1(Input.parse("day22/Day22")).println("Part1 input")
+    private fun nextSecret(
+        seed: ULong
+    ): ULong {
+        val mix = { a: ULong, b: ULong -> a xor b }
+        val prune = { a: ULong -> a and 16777215UL }
 
-    part2(Input(listOf(1UL, 2UL, 3UL, 2024UL))).checkResult(23UL)
-    part2(Input.parse("day22/Day22")).println("Part2 input")
+        var secret = prune(mix(seed, seed.shl(6)))
+        secret = prune(mix(secret, secret.shr(5).rndToInt()))
+        secret = prune(mix(secret, secret.shl(11)))
+        return secret
+    }
+
+    private fun ULong.toBananaPrice() = this % 10UL
 }

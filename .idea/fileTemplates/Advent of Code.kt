@@ -1,12 +1,13 @@
 package day${Day}
 
-#set( $Code = "bar" )
-fun main() {
-    fun part1(input: List<String>): Int {
+class Day${Day}(
+    private val input: List<String>
+) {
+    fun part1(): Int {
         return input.size
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(): Int {
         return input.size
     }
 }
