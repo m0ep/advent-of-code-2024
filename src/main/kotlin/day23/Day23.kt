@@ -20,13 +20,14 @@ class Day23(
         .map { it[0].trim() to it[1].trim() }
 
     fun part1(): Int {
-        val cliquesOfThree = Graphs.findCliquesOfSizeN(links, 3)
+        val cliquesOfThree = Graphs.findAllCliquesOfSize(links, 3)
         return cliquesOfThree.filter { it.any(::startsWithT) }.size
     }
 
     private fun startsWithT(value: String) = value.isNotBlank() && 't' == value[0]
 
-    fun part2() = Graphs.findMaxClique(links)
+    fun part2() = Graphs.findAllMaxCliques(links)
+        .maxBy { it.size }
         .sorted()
         .joinToString(",")
 }

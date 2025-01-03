@@ -1,60 +1,25 @@
 package utils
 
+import utils.graph.clique.FindMaxCliquesBronKerboschNoPivot
+
+interface FindMaxCliquesAlgorithm<T>{
+    fun run(
+        neighbors: Map<T, Set<T>>,
+        maxSize: Int = Int.MAX_VALUE
+    ): Set<Set<T>>
+}
 
 class Graphs {
     companion object {
-        fun <T> findMaxClique(
-            neighbors: Map<T, Set<T>>
-        ): Set<T> {
-            val queue = ArrayDeque(neighbors.keys.map { setOf(it) })
-            val found = queue.toMutableSet()
-
-            while (queue.isNotEmpty()) {
-                val clique = queue.removeFirst()
-                for (node in neighbors.keys) {
-                    if (true == neighbors[node]?.containsAll(clique)) {
-                        val next = clique + node
-                        if (next !in found) {
-                            queue.addLast(next)
-                            found.add(next)
-                        }
-                    }
-                }
-
-                if (queue.isEmpty()) {
-                    return clique
-                }
-            }
-
-            return emptySet()
-        }
-
-        fun <T> findCliquesOfSizeN(
+        fun <T> findAllMaxCliques(
             neighbors: Map<T, Set<T>>,
-            n: Int
-        ): Set<Set<T>> {
-            val queue = ArrayDeque(neighbors.keys.map { setOf(it) })
-            val found = queue.toMutableSet()
-            val result = mutableSetOf<Set<T>>()
+            algorithm: FindMaxCliquesAlgorithm<T> = FindMaxCliquesBronKerboschNoPivot()
+        ): Set<Set<T>> = algorithm.run(neighbors)
 
-            while (queue.isNotEmpty()) {
-                val clique = queue.removeFirst()
-                for (node in neighbors.keys) {
-                    if (true == neighbors[node]?.containsAll(clique)) {
-                        val next = clique + node
-                        if (next !in found) {
-                            if (n == next.size) {
-                                result.add(next)
-                            } else {
-                                found.add(next)
-                                queue.addLast(next)
-                            }
-                        }
-                    }
-                }
-            }
-
-            return result
-        }
+        fun <T> findAllCliquesOfSize(
+            neighbors: Map<T, Set<T>>,
+            size: Int,
+            algorithm: FindMaxCliquesAlgorithm<T> = FindMaxCliquesBronKerboschNoPivot()
+        ): Set<Set<T>> = algorithm.run(neighbors, size).filter { size == it.size }.toSet()
     }
 }
