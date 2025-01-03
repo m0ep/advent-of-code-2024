@@ -8,6 +8,7 @@ data class Vec2(
     operator fun minus(other: Vec2) = Vec2(x - other.x, y - other.y)
     operator fun unaryMinus() = Vec2(-x, -y)
     operator fun times(scalar: Int) = Vec2(x * scalar, y * scalar)
+    operator fun plus(direction: Direction) = this + direction.toVec2()
 
     fun distSqrt(other: Vec2): Int {
         val dx = other.x - this.x
