@@ -1,3 +1,5 @@
+package utils
+
 import kotlin.math.abs
 
 data class Vec2I(

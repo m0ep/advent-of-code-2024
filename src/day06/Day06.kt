@@ -1,8 +1,8 @@
 package day06
 
-import Vec2I
-import println
-import readInputLines
+import utils.Vec2I
+import utils.println
+import utils.readInputLines
 
 typealias PuzzleMap06 = List<List<Char>>
 

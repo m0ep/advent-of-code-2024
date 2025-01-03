@@ -1,8 +1,8 @@
 package day11
 
-import checkResult
-import println
-import readInputString
+import utils.checkResult
+import utils.println
+import utils.readInputString
 
 fun countDigits(
     value: ULong

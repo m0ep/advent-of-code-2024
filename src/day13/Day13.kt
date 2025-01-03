@@ -1,9 +1,9 @@
 package day13
 
-import Vec2L
-import checkResult
-import println
-import readInputLines
+import utils.Vec2L
+import utils.checkResult
+import utils.println
+import utils.readInputLines
 import java.util.*
 import kotlin.collections.ArrayDeque
 

@@ -1,7 +1,7 @@
 package day05
 
-import println
-import readInputLines
+import utils.println
+import utils.readInputLines
 
 data class PuzzleInput(
     val orderingMap: Map<Int, Set<Int>>,

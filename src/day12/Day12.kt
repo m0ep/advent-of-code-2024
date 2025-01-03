@@ -1,8 +1,8 @@
 package day12
 
-import Vec2I
-import println
-import readInput2DMapChar
+import utils.Vec2I
+import utils.println
+import utils.readInput2DMapChar
 import kotlin.math.sign
 import kotlin.time.measureTimedValue
 

@@ -1,7 +1,7 @@
 package day04
 
-import println
-import readInputLines
+import utils.println
+import utils.readInputLines
 
 fun main() {
 
