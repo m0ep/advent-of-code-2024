@@ -1,11 +1,11 @@
 import kotlin.math.abs
 
-data class ParsedInput(
+private data class ParsedInput(
     val left: List<Int>,
     val right: List<Int>
 )
 
-fun parseInput(input: List<String>): ParsedInput {
+private fun parseInput(input: List<String>): ParsedInput {
     val left = mutableListOf<Int>()
     val right = mutableListOf<Int>()
 
