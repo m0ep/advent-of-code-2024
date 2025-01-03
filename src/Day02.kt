@@ -46,10 +46,10 @@ fun main() {
     check(part1(listOf("1 2 7 8 9")) == 0)
     check(part1(listOf("8 6 4 4 1")) == 0)
 
-    val testInput = readInput("Day02_test")
+    val testInput = readInputLines("Day02_test")
     check(part1(testInput) == 2)
 
-    val input = readInput("Day02")
+    val input = readInputLines("Day02")
     part1(input).also(::println).also { check(479 == it) }
     part2(input).also(::println).also { check(531 == it) }
 }
