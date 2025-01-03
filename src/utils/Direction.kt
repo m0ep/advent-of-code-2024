@@ -24,6 +24,15 @@ enum class Direction {
         }
     }
 
+    fun turnAround(): Direction {
+        return when(this){
+            NORTH -> SOUTH
+            EAST -> WEST
+            SOUTH -> NORTH
+            WEST -> EAST
+        }
+    }
+
     fun toVec2I(): Vec2I {
         return when (this) {
             NORTH -> Vec2I(0, -1)
