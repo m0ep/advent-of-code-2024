@@ -53,16 +53,13 @@ fun main() {
         return result
     }
 
-    // Test if implementation meets criteria from the description, like:
     check(part1(listOf("3   7")) == 4)
     check(part1(listOf("9   3")) == 6)
 
-    // Or read a large test input from the `src/Day01_test.txt` file:
-    val testInput = readInputLines("Day01_test")
+    val testInput = readInputLines("day01/Day01_test")
     check(part1(testInput) == 11)
 
-    // Read the input from the `src/Day01.txt` file.
-    val input = readInputLines("Day01")
+    val input = readInputLines("day01/Day01")
     "Day01 Part 1 ----".println()
     part1(input).println()
 

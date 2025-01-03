@@ -87,19 +87,19 @@ fun main() {
         return count
     }
 
-    val inputTest1 = readInputLines("Day04_test1")
+    val inputTest1 = readInputLines("day04/Day04_test1")
     check(part1(inputTest1) == 5)
 
-    val inputTest2 = readInputLines("Day04_test2")
+    val inputTest2 = readInputLines("day04/Day04_test2")
     check(part1(inputTest2) == 18)
 
-    val input = readInputLines("Day04")
+    val input = readInputLines("day04/Day04")
     part1(input).println()
 
-    val inputTest3 = readInputLines("Day04_test3")
+    val inputTest3 = readInputLines("day04/Day04_test3")
     check(part2(inputTest3) == 1)
 
-    val inputTest4 = readInputLines("Day04_test4")
+    val inputTest4 = readInputLines("day04/Day04_test4")
     check(part2(inputTest4) == 9)
 
     part2(input).println()
